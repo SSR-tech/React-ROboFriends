@@ -4,7 +4,7 @@ import { robots } from "../robot";
 import SearchResults from "../components/SearchResults";
 import "./App.css";
 import Scroll from "../components/Scroll";
-
+import ErrorBoundary from "../components/ErrorBoundary";
 export class App extends Component {
   constructor() {
     super();
@@ -29,7 +29,6 @@ export class App extends Component {
     const filterRobotCards = animal.filter(robot => {
       return robot.name.toLowerCase().includes(searchField.toLowerCase());
     });
-
     return !robots.length ? (
       <h1>Loading</h1>
     ) : (
@@ -37,7 +36,9 @@ export class App extends Component {
         <h1 className="mainTitle">RobotFriends</h1>
         <SearchResults searchChange={this.onSearchChange} />
         <Scroll>
-          <CardList animals={filterRobotCards} />
+          <ErrorBoundary>
+            <CardList animals={(robots, filterRobotCards)} />
+          </ErrorBoundary>
         </Scroll>
       </div>
     );

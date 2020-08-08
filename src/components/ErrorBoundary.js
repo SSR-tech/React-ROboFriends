@@ -7,8 +7,14 @@ class ErrorBoundary extends Component {
       hasError: false,
     };
   }
+  componentDidCatch(error, info) {
+    this.setState({ hasError: true });
+  }
   render() {
-    return <div></div>;
+    if (this.state.hasError) {
+      return <h1 className="mainTitle">Ooops. We'r sorry for this</h1>;
+    }
+    return this.props.children;
   }
 }
 
